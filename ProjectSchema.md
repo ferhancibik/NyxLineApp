@@ -1,0 +1,274 @@
+# NyxLine Proje Şeması
+
+## 1. Proje Yapısının Oluşturulması
+- [ ] .NET MAUI projesi oluşturulacak
+  - Not: Visual Studio 2022 kullanılacak
+  - Not: .NET 7.0 veya üzeri sürüm seçilecek
+- [ ] Minimal API projesi oluşturulacak
+  - Not: API projesi ayrı bir solution içinde olacak
+- [ ] Proje klasör yapısı düzenlenecek
+  - Models/
+    - User.cs
+    - News.cs
+    - Horoscope.cs
+    - SkyEvent.cs
+  - Services/
+    - Interfaces/
+    - Implementations/
+  - ViewModels/
+  - Views/
+  - Helpers/
+  - Data/
+
+## 2. Veritabanı Yapısı
+- [ ] Entity Framework Core Code First yaklaşımı ile veritabanı modelleri oluşturulacak
+  - User modeli
+    - Id (Guid)
+    - Username (string)
+    - Email (string)
+    - PasswordHash (string)
+    - CreatedDate (DateTime)
+    - LastLoginDate (DateTime)
+  - News modeli
+    - Id (Guid)
+    - Title (string)
+    - Content (string)
+    - ImageUrl (string)
+    - CreatedDate (DateTime)
+    - CreatedBy (Guid)
+  - Horoscope modeli
+    - Id (Guid)
+    - ZodiacSign (string)
+    - DailyPrediction (string)
+    - Date (DateTime)
+  - SkyEvent modeli
+    - Id (Guid)
+    - EventName (string)
+    - Description (string)
+    - EventDate (DateTime)
+    - ImageUrl (string)
+- [ ] DbContext sınıfı oluşturulacak
+  - AppDbContext.cs
+  - DbSet'ler tanımlanacak
+  - OnModelCreating override edilecek
+- [ ] Migration'lar oluşturulacak ve uygulanacak
+  - Not: Initial migration oluşturulacak
+  - Not: Veritabanı güncellemeleri için yeni migration'lar eklenecek
+
+## 3. API Katmanı
+- [ ] Minimal API endpoint'leri oluşturulacak
+  - Kullanıcı işlemleri
+    - POST /api/users/register
+    - POST /api/users/login
+    - GET /api/users/profile
+    - PUT /api/users/profile
+  - Haber işlemleri
+    - GET /api/news
+    - GET /api/news/{id}
+    - POST /api/news
+    - PUT /api/news/{id}
+    - DELETE /api/news/{id}
+  - Astroloji işlemleri
+    - GET /api/horoscopes
+    - GET /api/horoscopes/{sign}
+  - Gökyüzü olayları işlemleri
+    - GET /api/skyevents
+    - GET /api/skyevents/{id}
+- [ ] JWT Authentication yapısı kurulacak
+  - JWT token oluşturma
+  - Token doğrulama
+  - Authorization middleware
+- [ ] CORS ayarları yapılacak
+  - Not: MAUI uygulaması için CORS politikası ayarlanacak
+
+## 4. Service Katmanı
+- [ ] Service interface'leri oluşturulacak
+  - IUserService
+    - RegisterAsync
+    - LoginAsync
+    - GetProfileAsync
+    - UpdateProfileAsync
+  - INewsService
+    - GetAllAsync
+    - GetByIdAsync
+    - CreateAsync
+    - UpdateAsync
+    - DeleteAsync
+  - IHoroscopeService
+    - GetDailyHoroscopeAsync
+    - GetHoroscopeBySignAsync
+  - ISkyEventService
+    - GetAllAsync
+    - GetByIdAsync
+    - GetUpcomingEventsAsync
+- [ ] Service implementasyonları yapılacak
+  - Not: Her servis için repository pattern kullanılacak
+  - Not: Exception handling eklenecek
+- [ ] Dependency Injection ayarları yapılacak
+  - Program.cs'de servisler kaydedilecek
+
+## 5. UI Katmanı
+- [ ] Sayfalar oluşturulacak
+  - LoginPage
+    - Kullanıcı adı/email girişi
+    - Şifre girişi
+    - Giriş butonu
+    - Kayıt ol linki
+  - RegisterPage
+    - Kullanıcı bilgileri formu
+    - Doğrulama kontrolleri
+  - NewsPage
+    - Haber listesi
+    - Haber detayı
+    - Favorilere ekleme
+  - HoroscopePage
+    - Burç seçimi
+    - Günlük yorum
+    - Detaylı yorum
+  - SkyEventsPage
+    - Gökyüzü olayları listesi
+    - Gerçek zamanlı gökyüzü görüntüsü
+  - ProfilePage
+    - Kullanıcı bilgileri
+    - Favori içerikler
+    - Ayarlar
+- [ ] ViewModel'ler oluşturulacak
+  - Not: MVVM pattern kullanılacak
+  - Not: INotifyPropertyChanged implementasyonu
+- [ ] Tema ve stil dosyaları hazırlanacak
+  - Colors.xaml
+  - Styles.xaml
+  - Dark tema renkleri
+- [ ] Görsel kaynaklar eklenecak
+  - Logo
+  - İkonlar
+  - Arka plan görselleri
+
+## 6. Kullanıcı Arayüzü Bileşenleri
+- [ ] CollectionView kullanımı
+  - Haber listesi
+  - Gökyüzü olayları listesi
+- [ ] Picker kullanımı
+  - Burç seçimi
+  - Tarih seçimi
+- [ ] DatePicker/TimePicker kullanımı
+  - Olay tarihi seçimi
+  - Filtreleme için tarih aralığı
+- [ ] RadioButton/Checkbox kullanımı
+  - Filtreleme seçenekleri
+  - Ayarlar sayfası
+- [ ] SwipeView kullanımı
+  - Liste öğelerinde silme/güncelleme
+- [ ] Özel kontroller eklenmesi
+  - Gökyüzü görüntüleme kontrolü
+  - Yıldız haritası kontrolü
+
+## 7. Veri Doğrulama
+- [ ] Kullanıcı girişi doğrulama
+  - Email formatı kontrolü
+  - Şifre güvenlik kuralları
+- [ ] Form doğrulamaları
+  - Zorunlu alanlar
+  - Karakter sınırlamaları
+  - Format kontrolleri
+- [ ] Veri ekleme/güncelleme doğrulamaları
+  - Benzersizlik kontrolleri
+  - İlişkisel veri kontrolleri
+
+## 8. Gerçek Zamanlı Gökyüzü Entegrasyonu
+- [ ] SkyView veya alternatif API entegrasyonu
+  - API anahtarı yönetimi
+  - HTTP istekleri
+  - Veri dönüşümü
+- [ ] Gerçek zamanlı veri çekme
+  - Timer kullanımı
+  - Background service
+- [ ] Gökyüzü görüntüleme ekranı tasarımı
+  - 3D görüntüleme
+  - Zoom kontrolleri
+  - Bilgi gösterimi
+
+## 9. Güvenlik
+- [ ] Kullanıcı kimlik doğrulama
+  - JWT token yönetimi
+  - Refresh token
+- [ ] Şifreleme
+  - Password hashing
+  - Hassas veri şifreleme
+- [ ] Yetkilendirme
+  - Role-based authorization
+  - Policy-based authorization
+- [ ] Güvenli veri depolama
+  - SecureStorage kullanımı
+  - Preferences yönetimi
+
+## 10. Test ve Hata Ayıklama
+- [ ] Unit testler yazılacak
+  - Service testleri
+  - API testleri
+  - ViewModel testleri
+- [ ] UI testleri yapılacak
+  - Sayfa geçişleri
+  - Form doğrulamaları
+  - Veri gösterimi
+- [ ] Hata ayıklama ve optimizasyon
+  - Performance monitoring
+  - Memory leak kontrolü
+  - Exception handling
+
+## 11. Dokümantasyon
+- [ ] Kod dokümantasyonu
+  - XML comments
+  - README dosyaları
+- [ ] API dokümantasyonu
+  - Swagger/OpenAPI
+  - Postman koleksiyonu
+- [ ] Kullanıcı kılavuzu
+  - Kurulum adımları
+  - Kullanım talimatları
+  - SSS
+
+## 12. Deployment
+- [ ] Uygulama paketlenmesi
+  - Android APK
+  - iOS IPA
+  - Windows MSIX
+- [ ] API deployment
+  - Azure App Service
+  - Docker container
+- [ ] Mobil uygulama deployment
+  - Google Play Store
+  - Apple App Store
+  - Microsoft Store
+
+## 13. Proje İsterlerinin Kontrolü
+- [ ] MAUI kontrolü
+  - Cross-platform çalışma
+  - Native performans
+- [ ] Minimal API kontrolü
+  - Endpoint doğrulama
+  - Response formatları
+- [ ] Entity Framework kontrolü
+  - Migration geçmişi
+  - Veri ilişkileri
+- [ ] Veritabanı işlemleri kontrolü
+  - CRUD operasyonları
+  - Transaction yönetimi
+- [ ] Kullanıcı işlemleri kontrolü
+  - Authentication flow
+  - Authorization rules
+- [ ] UI kontrolleri kontrolü
+  - Responsive tasarım
+  - Kullanıcı deneyimi
+- [ ] Service yapısı kontrolü
+  - Dependency injection
+  - Interface segregation
+- [ ] OOP prensipleri kontrolü
+  - SOLID principles
+  - Design patterns
+- [ ] Veri doğrulama kontrolü
+  - Input validation
+  - Business rules
+- [ ] LINQ kullanımı kontrolü
+  - Query optimizasyonu
+  - Performance impact 
